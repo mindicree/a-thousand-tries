@@ -61,9 +61,9 @@
                 </div>
                 <div id="textbox" class="absolute bottom-3 left-[16.66%] mx-auto flex flex-col w-2/3 h-[30vh]">
                     <div class="bg-fuchsia-300/90 border-4 border-fuchsia-500 rounded-t-lg w-1/3 min-w-[200px] h-[8vh] grid pl-4">
-                        <span id="textbox-title" class="text-white my-auto text-2xl lg:text-3xl xl:text-4xl">Sarah</span>
+                        <span id="textbox-title" class="text-white my-auto text-2xl lg:text-3xl xl:text-4xl"></span>
                     </div>
-                    <div class="bg-fuchsia-300/90 border-4 border-fuchsia-500 rounded-b-lg rounded-r-lg w-full h-[22vh] grid px-4 py-1.5 overflow-hidden">
+                    <div class="bg-fuchsia-300/90 border-4 border-fuchsia-500 rounded-b-lg rounded-r-lg rounded-l-lg w-full h-[22vh] grid px-4 py-1.5 overflow-hidden">
                         <p id="textbox-text" class="mx-auto w-full text-white text-xl 2xl:text-2xl overflow-hidden"></p>
                     </div>
                 </div>

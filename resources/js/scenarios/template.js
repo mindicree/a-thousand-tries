@@ -15,11 +15,17 @@ let template = {
                     // for assigning memories, creating alerts, loading the next dialog tree, and ending scenarios
                     console.log()
                 },
-                responseDialog: () => {
+                calcDialog: () => {
                     // ignore text and use case situation
+                    if (Math.random() < 0.5) {
+                        return "Some text"
+                    } else {
+                        return "Some other text"
+                    }
                 },
-                conditionalDialog: () => {
-                    // move to a particular dialog tree depending on situation
+                changeDialogTree: () => {
+                    // move to a particular dialog tree depending on situation, also can perform certain calculations beforehand
+                    return "Name of dialog tree"
                 },
                 decisionTree: [
                     {

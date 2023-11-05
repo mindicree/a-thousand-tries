@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Laravel</title>
+        {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
         @vite('resources/css/app.css')
         <style>
             @font-face {
@@ -31,7 +32,7 @@
             </div>
             <div id="home-screen" class="grid w-full min-w-full max-w-full h-screen max-h-screen overflow-hidden bg-center bg-cover opacity-0 transition ease-linear duration-2000" style="background-image: url('/img/home_screen/home.png')">
                 <h1 id="home-title" class="absolute left-20 top-20 text-white text-2xl md:text-6xl 2xl:text-8xl titlefont w-1/2 drop-shadow-xl transition ease-linear duration-500">Although It May Take A 1000 Tries, Our Love Will Blossom Only Once</h1>
-                <img id="home-sarah" src="/img/home_screen/sarah.png" class="absolute w-1/2 right-0 top-10 transition ease-linear duration-500">
+                <img id="home-sarah" src="/img/home_screen/sarah/{{ rand(0, 2) }}.png?{{ time() }}" class="absolute w-1/2 right-0 top-10 transition ease-linear duration-500">
                 <div id="home-menu" class="absolute left-20 bottom-20 flex flex-col gap-4 transition ease-linear duration-500">
                     <button onclick="startGame()" class="w-52 py-2 bg-fuchsia-300 text-white text-xl font-bold rounded-full transition ease-in-out duration-50 hover:bg-fuchsia-400">Start</button>
                     <button onclick="showTutorial()" class="w-52 py-2 bg-fuchsia-300 text-white text-xl font-bold rounded-full transition ease-in-out duration-50 hover:bg-fuchsia-400">How To Play</button>
@@ -52,20 +53,31 @@
                     <button onclick="hideTutorial()" class="absolute -bottom-20 right-0 w-52 py-2 bg-fuchsia-300 text-white text-xl font-bold rounded-full transition ease-in-out duration-50 hover:bg-fuchsia-400">Back</button>
                 </div>
             </div>
+            {{-- Game Screen --}}
             <div id="game-screen" class="flex relative w-full min-w-full max-w-full overflow-hidden min-h-screen max-h-screen h-screen bg-black">
-                <div id="scene-container" class="w-full h-screen">
+                <div id="scene-container" class="grid w-full h-screen">
                     @foreach($scenes as $scene)
-                        <div id="{{ $scene }}" class="scene w-full h-screen bg-cover bg-center" style="background-image: url('/img/scenes/{{ $scene }}.png')">
+                        <div id="{{ $scene }}" class="scene {{ $loop->iteration == 1 ? 'scene-active' : 'scene-inactive' }} min-w-full min-h-screen bg-cover bg-center" style="background-image: url('/img/scenes/{{ $scene }}.png')">
                         </div>
                     @endforeach
                 </div>
-                <div id="textbox" class="absolute bottom-3 left-[16.66%] mx-auto flex flex-col w-2/3 h-[30vh]">
+                <div id="textbox" class="z-[100] absolute bottom-3 left-[16.66%] mx-auto flex flex-col w-2/3 h-[30vh]">
                     <div class="bg-fuchsia-300/90 border-4 border-fuchsia-500 rounded-t-lg w-1/3 min-w-[200px] h-[8vh] grid pl-4">
-                        <span id="textbox-title" class="text-white my-auto text-2xl lg:text-3xl xl:text-4xl"></span>
+                        <span id="textbox-title" class="text-white my-auto text-2xl xl:text-3xl"></span>
                     </div>
                     <div class="bg-fuchsia-300/90 border-4 border-fuchsia-500 rounded-b-lg rounded-r-lg rounded-l-lg w-full h-[22vh] grid px-4 py-1.5 overflow-hidden">
-                        <p id="textbox-text" class="mx-auto w-full text-white text-xl 2xl:text-2xl overflow-hidden"></p>
+                        <p id="textbox-text" class="mx-auto w-full text-white text-xl xl:text-3xl overflow-hidden"></p>
                     </div>
+                </div>
+                <div id="sprite-right" class="grid relative min-w-full min-h-screen opacity-0 transition">
+                    <img id="sarah_happy_open" src="/img/characters/sarah_happy_open.png" class="sprite absolute w-1/2 right-0 top-10 transition ease-linear duration-1000">
+                    <img id="sarah_happy_closed" src="/img/characters/sarah_happy_closed.png" class="sprite absolute w-1/2 right-0 top-10 transition ease-linear duration-1000">
+                    <img id="sarah_neutral" src="/img/characters/sarah_neutral.png" class="sprite absolute w-1/2 right-0 top-10 transition ease-linear duration-1000">
+                    <img id="sarah_nervous" src="/img/characters/sarah_nervous.png" class="sprite absolute w-1/2 right-0 top-10 transition ease-linear duration-1000">
+                    <img id="sarah_sad" src="/img/characters/sarah_sad.png" class="sprite absolute w-1/2 right-0 top-10 transition ease-linear duration-1000">
+                    <img id="sarah_upset" src="/img/characters/sarah_upset.png" class="sprite absolute w-1/2 right-0 top-10 transition ease-linear duration-1000">
+                    <img id="sarah_teeth" src="/img/characters/sarah_teeth.png" class="sprite absolute w-1/2 right-0 top-10 transition ease-linear duration-1000">
+                    <img id="sarah_angry" src="/img/characters/sarah_angry.png" class="sprite absolute w-1/2 right-0 top-10 transition ease-linear duration-1000">
                 </div>
             </div>
         </div>

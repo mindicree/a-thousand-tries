@@ -23,10 +23,14 @@ window.tbx = document.querySelector('#textbox')
 window.tbxTitle = document.querySelector('#textbox-title')
 window.tbxText = document.querySelector('#textbox-text')
 
+// sprites
+window.spriteRight = document.querySelector('#sprite-right')
 
 window.sakura = new Sakura('#home-screen', {
     maxSize: 30
 });
+
+// function to preload images
 
 // once everything is loaded, loa the homescreen
 window.addEventListener('load', () => {
@@ -46,7 +50,7 @@ window.startGame = () => {
     sakura.stop(true);
     setTimeout(() => {
         clearHome()
-    }, 500)
+    }, 50)
     setTimeout(() => {
         homeScreen.classList.add('hidden')
     }, 3000)
@@ -77,10 +81,11 @@ window.continueGame = () => {
     window.failedScenario = false;
     window.canAdvance = false;
     window.autoProgress = true;
+    window.scenes = document.getElementsByClassName('scene');
 }
 
 window.getNewName = () => {
-    let names = ['Chris', 'Dave', 'Sam', 'Jayden', 'Ben', ''];
+    let names = ['Chris', 'Dave', 'Sam', 'Jayden', 'Ben', 'John', 'Alex', 'Leo', 'Oli', 'Ethan', 'Luke'];
 }
 
 // add all ways to use game loop
@@ -131,6 +136,20 @@ window.gameLoop = () => {
 
     // load dialog in dialog tree
     currentDialog = currentDialogTree.shift()
+    if (!currentDialog) {
+        if (failedScenario || loveLevel < 0) {
+            gameOver()
+        } else {
+            currentScenario = null;
+            if (playerHasWon()) {
+                // TODO implement
+                alert('TODO figure out what to do after player wins')
+            } else {
+                gameLoop()
+            }
+            
+        }
+    }
 
     // can advance = false
     canAdvance = false;
@@ -161,7 +180,9 @@ window.gameLoop = () => {
     if (currentDialog.hasOwnProperty("calcDialog")) {
         let displayText = currentDialog.calcDialog()
         let timeToAllow = displayText.length * 25 + 100;
-        textboxSetText(displayText)
+        setTimeout(() => {
+            textboxSetText(displayText)
+        }, currentDialog.textDelay || 0)
         setTimeout(() => {
             canAdvance = true;
         }, timeToAllow)
@@ -171,16 +192,36 @@ window.gameLoop = () => {
     } else {
         let displayText = currentDialog.text
         let timeToAllow = displayText.length * 25 + 100;
-        textboxSetText(displayText)
+        setTimeout(() => {
+            textboxSetText(displayText)
+        }, currentDialog.textDelay || 0)
         setTimeout(() => {
             canAdvance = true;
         }, timeToAllow)
     }
 }
 
-window.changeScene = () => {
-    // TODO implement
-    alert('TODO: implement changeScene function')
+window.changeScene = (newSceneName, speed="slow") => {
+    let newActiveScene = document.getElementById(newSceneName);
+    let currActiveScene = Array.from(document.getElementsByClassName('scene-active'))[0];
+    if (!newActiveScene || !currActiveScene) {
+        console.log('Test')
+        return
+    }
+
+    currActiveScene.style.zIndex = 10;
+    newActiveScene.style.zIndex = 0;
+    newActiveScene.style.opacity = 1.0;
+
+    newActiveScene.classList.remove('scene-inactive')
+    newActiveScene.classList.add('scene-active')
+
+    currActiveScene.classList.add(`active-to-inactive-slow`)
+    setTimeout(() => {
+        currActiveScene.classList.add('scene-inactive')
+        currActiveScene.classList.remove('scene-active')
+    }, 5000);
+    
 }
 
 window.changeSceneFTB = () => {
@@ -231,4 +272,17 @@ window.getConfrontationScenario = () => {
 window.getEndingScenario = () => {
     // TODO implement
     alert('TODO implement getEndingScenario')
+}
+
+window.playerHasWon = () => {
+    // TODO implement
+    alert('TODO implement playerHasWon')
+}
+
+// sprite things
+window.changeSpriteRight = (sprite) => {
+    Array.from(spriteRight.getElementsByClassName('sprite')).forEach(element => {
+        element.classList.add('hidden')
+    })
+    document.getElementById(sprite).classList.remove('hidden')
 }

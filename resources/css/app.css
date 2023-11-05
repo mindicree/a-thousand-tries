@@ -27,6 +27,55 @@ body {
     100% { display: none; }
 }
 
+@keyframes animation_active_to_inactive {
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
+}
+
+.active-to-inactive-very-fast {
+    animation: animation_active_to_inactive;
+    animation-duration: 0.25s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.active-to-inactive-fast {
+    animation: animation_active_to_inactive;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.active-to-inactive-med {
+    animation: animation_active_to_inactive;
+    animation-duration: 1.0s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.active-to-inactive-slow {
+    animation: animation_active_to_inactive;
+    animation-duration: 3.0s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.active-to-inactive-very-slow {
+    animation: animation_active_to_inactive;
+    animation-duration: 5.0s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.scene-inactive {
+    display: none;
+}
+
+.scene-active {
+    display: initial;
+    position: absolute;
+}
+
 .fade_out_right_fast {
     animation: fade_out_right;
     animation-duration: 0.5s;

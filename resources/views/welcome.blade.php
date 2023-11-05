@@ -26,6 +26,7 @@
     </head>
     <body class="">
         <div id="content-container" class="min-w-full max-w-full h-screen min-h-screen max-h-screen overflow-hidden">
+            <div id="master-black" class="absolute w-full min-w-full max-w-full h-screen min-h-screen max-h-screen -z-50 bg-black opacity-0 transition"></div>
             <div id="loading-screen" class="bg-white flex flex-col w-full max-w-full h-screen max-h-screen transition ease-linear duration-500">
                 <h1 class="m-auto text-5xl">Loading</h1>
                 <span id="loading-spinner" class="m-auto"></span>
@@ -61,7 +62,7 @@
                         </div>
                     @endforeach
                 </div>
-                <div id="textbox" class="z-[100] absolute bottom-3 left-[16.66%] mx-auto flex flex-col w-2/3 h-[30vh]">
+                <div id="textbox" class="z-[10000] absolute bottom-3 left-[16.66%] mx-auto flex flex-col w-2/3 h-[30vh]">
                     <div class="bg-fuchsia-300/90 border-4 border-fuchsia-500 rounded-t-lg w-1/3 min-w-[200px] h-[8vh] grid pl-4">
                         <span id="textbox-title" class="text-white my-auto text-2xl xl:text-3xl"></span>
                     </div>
@@ -78,6 +79,10 @@
                     <img id="sarah_upset" src="/img/characters/sarah_upset.png" class="sprite absolute w-1/2 right-0 top-10 transition ease-linear duration-1000">
                     <img id="sarah_teeth" src="/img/characters/sarah_teeth.png" class="sprite absolute w-1/2 right-0 top-10 transition ease-linear duration-1000">
                     <img id="sarah_angry" src="/img/characters/sarah_angry.png" class="sprite absolute w-1/2 right-0 top-10 transition ease-linear duration-1000">
+                    <img id="pretty_sarah_happy" src="/img/characters/pretty_sarah_happy.png" class="sprite absolute w-1/2 right-0 top-10 transition ease-linear duration-1000">
+                </div>
+                <div id="decision-container" class="absolute flex flex-col gap-4 w-[1/3] top-1/3 h-[50vh] left-[16.66%] -z-50 opacity-0 transition ease-in-out duration-100">
+                    <button class="text-white text-xl w-full h-[10vh] bg-fuchsia-300 hover:bg-fuchsia-400 transition ease-in-out duration-100 rounded-full text-center"></button>
                 </div>
             </div>
         </div>

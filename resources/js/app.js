@@ -17,11 +17,15 @@ window.contentContainer = document.querySelector('#content-container')
 window.loadScreen = document.querySelector('#loading-screen')
 window.homeScreen = document.querySelector('#home-screen')
 window.gameScreen = document.querySelector('#game-screen')
+window.masterBlack = document.querySelector('#master-black')
 
 // textbox parts
 window.tbx = document.querySelector('#textbox')
 window.tbxTitle = document.querySelector('#textbox-title')
 window.tbxText = document.querySelector('#textbox-text')
+
+// decision container
+window.decisionContainer = document.querySelector('#decision-container')
 
 // sprites
 window.spriteRight = document.querySelector('#sprite-right')
@@ -61,8 +65,20 @@ window.initializeNewGame = () => {
     // gamplay mechanics
     continueGame();
 
-    window.listOfMemories = [];
-    window.listOfConcerns = [];
+    window.listOfMemories = {
+        parents: 0,
+        prev_girl: 0,
+        best_friend: 0,
+        school: 0,
+        sarah: 0,
+    };
+    window.listOfConcerns = {
+        parents: 0,
+        prev_girl: 0,
+        best_friend: 0,
+        school: 0,
+        sarah: 0,
+    };
     window.listOfItems = [];
     // function to get the current fake name
     setTimeout(() => {
@@ -79,8 +95,9 @@ window.continueGame = () => {
     window.gameRoute = [];
     window.loveLevel = 0;
     window.failedScenario = false;
-    window.canAdvance = false;
+    window.canAdvance = true;
     window.autoProgress = true;
+    window.decisionContainerActive = false;
     window.scenes = document.getElementsByClassName('scene');
 }
 
@@ -90,13 +107,8 @@ window.getNewName = () => {
 
 // add all ways to use game loop
 window.addEventListener('click', () => {
-    if (canAdvance || autoProgress) {
+    if (canAdvance && !decisionContainerActive) {
         gameLoop()
-    }
-})
-window.addEventListener('keydown', (e) => {
-    if (['Enter, Spacebar'].includes(e.key) && (canAdvance || autoProgress)) {
-        gameLoop();
     }
 })
 
@@ -177,6 +189,7 @@ window.gameLoop = () => {
     // else if decisionTree, load decision and execute accordingly
     // else just run regular dialog
     // run post dialog
+    clearTimeout()
     if (currentDialog.hasOwnProperty("calcDialog")) {
         let displayText = currentDialog.calcDialog()
         let timeToAllow = displayText.length * 25 + 100;
@@ -187,6 +200,7 @@ window.gameLoop = () => {
             canAdvance = true;
         }, timeToAllow)
     } else if (currentDialog.hasOwnProperty("decisionTree")) {
+        decisionContainerActive = true;
         setDecisionTreeOptions(currentDialog.decisionTree)
         canAdvance = true;
     } else {
@@ -216,7 +230,7 @@ window.changeScene = (newSceneName, speed="slow") => {
     newActiveScene.classList.remove('scene-inactive')
     newActiveScene.classList.add('scene-active')
 
-    currActiveScene.classList.add(`active-to-inactive-slow`)
+    currActiveScene.classList.add(`active-to-inactive-${speed}`)
     setTimeout(() => {
         currActiveScene.classList.add('scene-inactive')
         currActiveScene.classList.remove('scene-active')
@@ -224,9 +238,35 @@ window.changeScene = (newSceneName, speed="slow") => {
     
 }
 
-window.changeSceneFTB = () => {
-    // TODO implement
-    alert('TODO: implement changeSceneFTB function')
+window.changeSceneFTB = (newSceneName, speed=3000) => {
+    textboxSetText('')
+    textboxSetTitle('')
+
+    canAdvance = false;
+    
+    let newActiveScene = document.getElementById(newSceneName);
+    let currActiveScene = Array.from(document.getElementsByClassName('scene-active'))[0];
+
+    masterBlack.classList.remove('-z-50')
+    masterBlack.classList.add('z-50')
+    masterBlack.style.transitionDuration = `${speed/2}ms`
+    masterBlack.style.transitionTiming = 'linear';
+    masterBlack.classList.remove('opacity-0')
+
+    setTimeout(() => {
+        newActiveScene.classList.remove('scene-inactive')
+        newActiveScene.classList.add('scene-active')
+        currActiveScene.classList.remove('scene-inactive')
+        currActiveScene.classList.add('scene-active')
+        masterBlack.classList.add('opacity-0')
+    }, speed/2 + 100)
+
+    setTimeout(() => {
+        masterBlack.classList.add('-z-50')
+        masterBlack.classList.remove('z-50')
+        masterBlack.classList.add('opacity-0')
+        canAdvance = true;
+    }, speed + 125)
 }
 
 window.changeSceneFTW = () => {
@@ -245,8 +285,25 @@ window.gameOver = () => {
 }
 
 window.setDecisionTreeOptions = (options) => {
-    // TODO implement
-    alert('TODO implement setDecisionTreeOptions')
+    decisionContainer.innerHTML = "";
+    options.forEach(option => {
+        let newOptionButton = document.createElement('button')
+        newOptionButton.className = "text-white text-xl w-full p-4 bg-fuchsia-300 hover:bg-fuchsia-400 transition ease-in-out duration-100 rounded-full text-center";
+        newOptionButton.innerHTML = `"${option.text}"`
+        newOptionButton.addEventListener('click', () => {
+            option.result(window);
+            decisionContainer.classList.add('opacity-0')
+            setTimeout(() => {
+                decisionContainer.classList.add('-z-50')
+                decisionContainerActive = false;
+                gameLoop()
+            }, 200)
+        })
+        decisionContainer.appendChild(newOptionButton)
+    })
+
+    decisionContainer.classList.remove('-z-50')
+    decisionContainer.classList.remove('opacity-0')
 }
 
 window.getDateScenario = () => {
@@ -281,7 +338,7 @@ window.playerHasWon = () => {
 
 // sprite things
 window.changeSpriteRight = (sprite) => {
-    Array.from(spriteRight.getElementsByClassName('sprite')).forEach(element => {
+    Array.from(document.getElementsByClassName('sprite')).forEach(element => {
         element.classList.add('hidden')
     })
     document.getElementById(sprite).classList.remove('hidden')

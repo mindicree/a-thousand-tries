@@ -2,6 +2,55 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    /* Remove selection ability from everything (courtesy of w3schools) */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
 body {
     overflow: hidden;
+}
+
+@keyframes fade_out_right {
+    0% { opacity: 1.0; }
+    90% { opacity: 0.0; transform: translateX(20%); }
+    95% { z-index: -10; }
+    100% { display: none; }
+}
+
+@keyframes fade_out_left {
+    0% { opacity: 1.0; }
+    90% { opacity: 0.0; transform: translateX(-20%); }
+    95% { z-index: -10; }
+    100% { display: none; }
+}
+
+.fade_out_right_fast {
+    animation: fade_out_right;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.fade_out_right_med {
+    animation: fade_out_right;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.fade_out_left_fast {
+    animation: fade_out_left;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.fade_out_left_med {
+    animation: fade_out_left;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
 }

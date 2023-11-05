@@ -5,3 +5,11 @@ window.textboxSetText = (text) => {
         }, 25*i)
     }
 }
+
+window.toggleTextBox = () => {
+
+}
+
+window.toggleTitleBox = () => {
+    
+}

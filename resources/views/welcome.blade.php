@@ -53,6 +53,12 @@
                 </div>
             </div>
             <div id="game-screen" class="flex relative w-full min-w-full max-w-full overflow-hidden min-h-screen max-h-screen h-screen bg-black">
+                <div id="scene-container" class="w-full h-screen">
+                    @foreach($scenes as $scene)
+                        <div id="{{ $scene }}" class="scene w-full h-screen bg-cover bg-center" style="background-image: url('/img/scenes/{{ $scene }}.png')">
+                        </div>
+                    @endforeach
+                </div>
                 <div id="textbox" class="absolute bottom-3 left-[16.66%] mx-auto flex flex-col w-2/3 h-[30vh]">
                     <div class="bg-fuchsia-300/90 border-4 border-fuchsia-500 rounded-t-lg w-1/3 min-w-[200px] h-[8vh] grid pl-4">
                         <span id="textbox-title" class="text-white my-auto text-2xl lg:text-3xl xl:text-4xl">Sarah</span>

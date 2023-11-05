@@ -7,3 +7,7 @@ window.setTransitionDuration = (element, duration=1000) => {
     element.classList.add(`duration-${duration}`)
     console.log(element.className)
 }
+
+window.sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms))
+}

@@ -5,4 +5,5 @@ window.setTransitionDuration = (element, duration=1000) => {
     })
     element.className = cleanedClasses.join(" ").trim()
     element.classList.add(`duration-${duration}`)
+    console.log(element.className)
 }
